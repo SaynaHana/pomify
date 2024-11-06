@@ -1,9 +1,9 @@
 import "./../App.css";
 
-function TimerButton({ onClick }) {
+function TimerButton({ text, onClick }) {
     return (
         <div>
-            <button className="Timer-button" onClick={onClick}>Start</button>
+            <button className="Timer-button" onClick={onClick}>{text}</button>
         </div>
     );
 }

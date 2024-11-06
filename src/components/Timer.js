@@ -1,52 +1,57 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import TimerText from "./TimerText";
 import TimerButton from "./TimerButton";
 import "./../App.css";
 
+/*
+    Component for the timer
+*/
 function Timer() {
-    // total time in seconds
-    // initial time is 25 minutes
-    const[time, setTime] = useState(1500);
-
-    const [seconds, setSeconds] = useState(0);
+    const timer = useRef(null);
+    const [timeLeft, setTimeLeft] = useState(1500);
     const [minutes, setMinutes] = useState(25);
+    const [seconds, setSeconds] = useState(0);
 
-    // how often to update timer
-    const [delay, setDelay] = useState(1000);
-
-    // state to store if timer should countdown
-    const [isRunning, setIsRunning] = useState(true);
-
-
+    /*
+        Updates the time left and calculates the minutes and seconds based on timeLeft
+    */
     function UpdateTime() {
-        // subtract a second from time
-        setTime(time => time - 1);
-
-        console.log(time);
-
-        // now calculate the time in minutes and remaining seconds
-        setMinutes(Math.floor(time / 60))
-        setSeconds(time % 60);
+        setTimeLeft(timeLeft - 1);
+        setMinutes(Math.floor(timeLeft / 60));
+        setSeconds(timeLeft % 60);
     }
 
-    function ToggleIsRunning() {
-        setIsRunning(!isRunning);
+    /*
+        Starts/resumes the timer
+    */
+    function StartTimer() {
+        // if there is a timer already running, stop it first to prevent multiple timers
+        if(timer) {
+            PauseTimer();
+        }
+
+        timer.current = setInterval(() => {
+            UpdateTime();
+        }, 1000);
+    }
+
+    /*
+        Clears the timer
+    */
+    function PauseTimer() {
+        clearInterval(timer.current); 
     }
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            if(isRunning) {
-                UpdateTime();
-            }
-        }, delay);
-
-        return () => clearInterval(interval);
-    }, [ isRunning ]);
+        StartTimer();
+        return () => clearInterval(timer.current);
+    })
 
     return (
         <div>
             <TimerText minutes={minutes} seconds={seconds}/>
-            <TimerButton onClick={ToggleIsRunning}/>
+            <TimerButton text={"Start"} onClick={StartTimer}/>
+            <TimerButton text={"Pause"} onClick={PauseTimer}/>
         </div>
     );
 }
