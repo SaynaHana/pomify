@@ -31,6 +31,24 @@
   font-size: 20px;
 }
 
+.Mode-selection {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  padding: 0;
+}
+
+.Mode-selection li {
+  margin: 5px;
+}
+
+.Mode-button {
+  border: none;
+  width: 120px;
+  height: 35px;
+  font-size: 18px;
+}
+
 .App-link {
   color: #61dafb;
 }

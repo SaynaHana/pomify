@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import TimerText from "./TimerText";
 import TimerButton from "./TimerButton";
+import ModeSelection from "./ModeSelection";
 import "./../App.css";
 
 /*
@@ -49,6 +50,7 @@ function Timer() {
 
     return (
         <div>
+            <ModeSelection/>
             <TimerText minutes={minutes} seconds={seconds}/>
             <TimerButton text={"Start"} onClick={StartTimer}/>
             <TimerButton text={"Pause"} onClick={PauseTimer}/>
