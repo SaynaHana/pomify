@@ -13,10 +13,20 @@ function Timer() {
     const [minutes, setMinutes] = useState(25);
     const [seconds, setSeconds] = useState(0);
 
+    // enum for modes
+    const modes = Object.freeze({
+        POMODORO: 0,
+        SHORT_BREAK: 1,
+        LONG_BREAK: 2
+    });
+
+    const [currMode, setCurrMode] = useState(modes.POMODORO);
+
     /*
         Updates the time left and calculates the minutes and seconds based on timeLeft
     */
     function UpdateTime() {
+        if(timeLeft < 0) return;
         setTimeLeft(timeLeft - 1);
         setMinutes(Math.floor(timeLeft / 60));
         setSeconds(timeLeft % 60);
@@ -43,10 +53,19 @@ function Timer() {
         clearInterval(timer.current); 
     }
 
+    function ChangeMode(new_mode) {
+        // don't do anything if already in the mode
+        if(currMode === new_mode) return;
+
+        if(new_mode === modes.POMODORO) {
+            
+        }
+    }
+
     useEffect(() => {
         StartTimer();
         return () => clearInterval(timer.current);
-    })
+    });
 
     return (
         <div>
