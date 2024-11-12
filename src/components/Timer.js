@@ -57,9 +57,19 @@ function Timer() {
         // don't do anything if already in the mode
         if(currMode === new_mode) return;
 
+        setCurrMode(new_mode);
+
+        // TODO: Change fixed times
         if(new_mode === modes.POMODORO) {
-            
+            setTimeLeft(1500);
         }
+        else if(new_mode === modes.SHORT_BREAK) {
+            setTimeLeft(300);
+        }
+        else if(new_mode === modes.LONG_BREAK) {
+            setTimeLeft(1800);
+        }
+        PauseTimer();
     }
 
     useEffect(() => {
@@ -69,7 +79,7 @@ function Timer() {
 
     return (
         <div>
-            <ModeSelection/>
+            <ModeSelection SwitchMode={ChangeMode} modes={modes}/>
             <TimerText minutes={minutes} seconds={seconds}/>
             <TimerButton text={"Start"} onClick={StartTimer}/>
             <TimerButton text={"Pause"} onClick={PauseTimer}/>
