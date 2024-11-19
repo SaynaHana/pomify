@@ -8,81 +8,45 @@ import "./../App.css";
     Component for the timer
 */
 function Timer() {
-    const timer = useRef(null);
     const [timeLeft, setTimeLeft] = useState(1500);
+    const [timerOn, setTimerOn] = useState(false);
     const [minutes, setMinutes] = useState(25);
     const [seconds, setSeconds] = useState(0);
 
-    // enum for modes
-    const modes = Object.freeze({
-        POMODORO: 0,
-        SHORT_BREAK: 1,
-        LONG_BREAK: 2
-    });
-
-    const [currMode, setCurrMode] = useState(modes.POMODORO);
-
     /*
-        Updates the time left and calculates the minutes and seconds based on timeLeft
+        Updates time left and calculates the minutes and seconds
     */
     function UpdateTime() {
-        if(timeLeft < 0) return;
-        setTimeLeft(timeLeft - 1);
-        setMinutes(Math.floor(timeLeft / 60));
+        setTimeLeft((prev) => prev - 1);
+        setMinutes(Math.floor(timeLeft/60));
         setSeconds(timeLeft % 60);
-    }
 
-    /*
-        Starts/resumes the timer
-    */
-    function StartTimer() {
-        // if there is a timer already running, stop it first to prevent multiple timers
-        if(timer) {
-            PauseTimer();
+        // stops timer after complete
+        if(timeLeft <= 0) {
+            setTimerOn(false);
         }
-
-        timer.current = setInterval(() => {
-            UpdateTime();
-        }, 1000);
-    }
-
-    /*
-        Clears the timer
-    */
-    function PauseTimer() {
-        clearInterval(timer.current); 
-    }
-
-    function ChangeMode(new_mode) {
-        // don't do anything if already in the mode
-        if(currMode === new_mode) return;
-
-        setCurrMode(new_mode);
-
-        // TODO: Change fixed times
-        if(new_mode === modes.POMODORO) {
-            setTimeLeft(1500);
-        }
-        else if(new_mode === modes.SHORT_BREAK) {
-            setTimeLeft(300);
-        }
-        else if(new_mode === modes.LONG_BREAK) {
-            setTimeLeft(1800);
-        }
-        PauseTimer();
     }
 
     useEffect(() => {
-        StartTimer();
-        return () => clearInterval(timer.current);
-    });
+        let timer = null;
+
+        // create interval when timer is running
+        if(timerOn) {
+            timer = setInterval(() => {
+                UpdateTime();
+            }, 1000);
+        }
+        else {
+            clearInterval(timer);
+        }
+
+        return () => clearInterval(timer);
+    }, [timeLeft, timerOn]);
 
     return (
         <div>
-            <ModeSelection SwitchMode={ChangeMode} modes={modes}/>
             <TimerText minutes={minutes} seconds={seconds}/>
-            <TimerButton text={"Start"} onClick={StartTimer}/>
-            <TimerButton text={"Pause"} onClick={PauseTimer}/>
+            <TimerButton text={timerOn ? "Pause" : "Start"} onClick={() => {setTimerOn(!timerOn)}}/>
         </div>
     );
 }
