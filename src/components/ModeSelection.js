@@ -1,18 +1,19 @@
 import ModeButton from "./ModeButton";
 import "./../App.css";
+import { MODES } from "./../utils/Constants";
 
-function ModeSelection({ SwitchMode, modes }) {
+function ModeSelection({ SwitchMode }) {
     return(
         <div>
-            <ul class="Mode-selection">
+            <ul className="Mode-selection">
                 <li>
-                    <ModeButton text={"Pomodoro"} onClick={() => SwitchMode(modes.POMODORO)}/>
+                    <ModeButton text={"Pomodoro"} onClick={() => SwitchMode(MODES.POMODORO)}/>
                 </li>
                 <li>
-                    <ModeButton text={"Short Break"} onClick={() => SwitchMode(modes.SHORT_BREAK)}/>
+                    <ModeButton text={"Short Break"} onClick={() => SwitchMode(MODES.SHORT_BREAK)}/>
                 </li>
                 <li>
-                    <ModeButton text={"Long Break"} onClick={() => SwitchMode(modes.LONG_BREAK)}/>
+                    <ModeButton text={"Long Break"} onClick={() => SwitchMode(MODES.LONG_BREAK)}/>
                 </li>
             </ul>
         </div>

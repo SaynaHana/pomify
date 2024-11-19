@@ -3,6 +3,7 @@ import TimerText from "./TimerText";
 import TimerButton from "./TimerButton";
 import ModeSelection from "./ModeSelection";
 import "./../App.css";
+import { MODES } from "./../utils/Constants";
 
 /*
     Component for the timer
@@ -12,19 +13,47 @@ function Timer() {
     const [timerOn, setTimerOn] = useState(false);
     const [minutes, setMinutes] = useState(25);
     const [seconds, setSeconds] = useState(0);
+    const [currMode, setCurrMode] = useState(MODES.POMODORO);
 
     /*
-        Updates time left and calculates the minutes and seconds
+        Calculates the minutes and seconds of time left
     */
-    function UpdateTime() {
-        setTimeLeft((prev) => prev - 1);
-        setMinutes(Math.floor(timeLeft/60));
-        setSeconds(timeLeft % 60);
+    function CalculateTime(time) {
+        setMinutes(Math.floor(time/60));
+        setSeconds(time % 60);
 
         // stops timer after complete
-        if(timeLeft <= 0) {
+        if(time <= 0) {
             setTimerOn(false);
         }
+    }
+
+    /*
+        Changes the time to the time of a corresponding mode
+    */
+    function SwitchMode(mode) {
+        if(currMode === mode) return; 
+
+        setCurrMode(mode);
+
+        // stop timer
+        setTimerOn(false);
+
+        let time = 0;
+
+        // change the time of the timer to the time of the corresponding mode
+        if(mode === MODES.POMODORO) {
+            time = 1500;
+        }
+        else if(mode === MODES.SHORT_BREAK) {
+            time = 300;
+        }
+        else {
+            time = 1800;
+        }
+
+        setTimeLeft(time);
+        CalculateTime(time);
     }
 
     useEffect(() => {
@@ -33,7 +62,8 @@ function Timer() {
         // create interval when timer is running
         if(timerOn) {
             timer = setInterval(() => {
-                UpdateTime();
+                CalculateTime(timeLeft - 1);
+                setTimeLeft((prev) => prev - 1);
             }, 1000);
         }
         else {
@@ -41,10 +71,11 @@ function Timer() {
         }
 
         return () => clearInterval(timer);
-    }, [timeLeft, timerOn]);
+    }, [timeLeft, timerOn, currMode]);
 
     return (
         <div>
+            <ModeSelection SwitchMode={SwitchMode}/>
             <TimerText minutes={minutes} seconds={seconds}/>
             <TimerButton text={timerOn ? "Pause" : "Start"} onClick={() => {setTimerOn(!timerOn)}}/>
         </div>
