@@ -14,6 +14,7 @@ function Timer() {
     const [minutes, setMinutes] = useState(25);
     const [seconds, setSeconds] = useState(0);
     const [currMode, setCurrMode] = useState(MODES.POMODORO);
+    const [pomodoroCount, setPomodoroCount] = useState(0);
 
     /*
         Calculates the minutes and seconds of time left
@@ -24,7 +25,7 @@ function Timer() {
 
         // stops timer after complete
         if(time <= 0) {
-            setTimerOn(false);
+            onTimerEnd();
         }
     }
 
@@ -54,6 +55,32 @@ function Timer() {
 
         setTimeLeft(time);
         CalculateTime(time);
+    }
+
+    /*
+        Notifies the user that time is up and switches the mode
+    */
+    function onTimerEnd() {
+        // stop timer
+        setTimerOn(false);
+
+        let nextMode = MODES.POMODORO;
+
+        // if pomodoro just finished, increment pomodoroCount
+        if(currMode === MODES.POMODORO) {
+            // if pomodoroCount + 1 is a multiple of 4, then take long break
+            // otherwise, short break
+            if((pomodoroCount + 1) % 4 === 0) {
+                nextMode = MODES.LONG_BREAK;
+            }
+            else {
+                nextMode = MODES.SHORT_BREAK;
+            }
+
+            setPomodoroCount((prev) => prev + 1);
+        }
+
+        SwitchMode(nextMode);
     }
 
     useEffect(() => {
