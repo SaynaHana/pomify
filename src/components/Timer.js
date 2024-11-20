@@ -4,6 +4,8 @@ import TimerButton from "./TimerButton";
 import ModeSelection from "./ModeSelection";
 import "./../App.css";
 import { MODES } from "./../utils/Constants";
+import useSound from "use-sound";
+import endSound from "../assets/audio/bell.mp3"
 
 /*
     Component for the timer
@@ -15,6 +17,7 @@ function Timer() {
     const [seconds, setSeconds] = useState(0);
     const [currMode, setCurrMode] = useState(MODES.POMODORO);
     const [pomodoroCount, setPomodoroCount] = useState(0);
+    const [playSound] = useSound(endSound, { volume: 0.1 });
 
     /*
         Calculates the minutes and seconds of time left
@@ -63,6 +66,8 @@ function Timer() {
     function onTimerEnd() {
         // stop timer
         setTimerOn(false);
+
+        playSound();
 
         let nextMode = MODES.POMODORO;
 
