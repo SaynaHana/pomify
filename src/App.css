@@ -49,6 +49,12 @@
   font-size: 18px;
 }
 
+#pomodoro-count {
+  font-size: 18px;
+  color: #bebebe;
+  font-weight: normal;
+}
+
 .App-link {
   color: #61dafb;
 }

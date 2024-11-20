@@ -110,6 +110,7 @@ function Timer() {
             <ModeSelection SwitchMode={SwitchMode}/>
             <TimerText minutes={minutes} seconds={seconds}/>
             <TimerButton text={timerOn ? "Pause" : "Start"} onClick={() => {setTimerOn(!timerOn)}}/>
+            <h3 id="pomodoro-count">#{pomodoroCount + 1}</h3>
         </div>
     );
 }
