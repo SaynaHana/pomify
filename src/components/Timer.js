@@ -30,6 +30,9 @@ function Timer() {
         if(time <= 0) {
             onTimerEnd();
         }
+
+        // cache time
+        localStorage.setItem("timeLeft", JSON.stringify(time));
     }
 
     /*
@@ -47,7 +50,7 @@ function Timer() {
 
         // change the time of the timer to the time of the corresponding mode
         if(mode === MODES.POMODORO) {
-            time = 1500;
+            time = 5;
         }
         else if(mode === MODES.SHORT_BREAK) {
             time = 300;
@@ -58,6 +61,9 @@ function Timer() {
 
         setTimeLeft(time);
         CalculateTime(time);
+
+        // cache mode 
+        localStorage.setItem("mode", JSON.stringify(mode));
     }
 
     /*
@@ -83,10 +89,42 @@ function Timer() {
             }
 
             setPomodoroCount((prev) => prev + 1);
+            
+            // cache pomodoro count
+            localStorage.setItem("pomodoroCount", JSON.stringify(pomodoroCount + 1));
         }
 
         SwitchMode(nextMode);
     }
+
+    function onStartup() {
+        const _timeLeft = JSON.parse(localStorage.getItem("timeLeft"));
+        const _mode = JSON.parse(localStorage.getItem("mode"));
+        const _pomodoroCount = JSON.parse(localStorage.getItem("pomodoroCount"));
+
+        console.log("Time Left: " + _timeLeft);
+        console.log("Mode: " + _mode);
+        console.log("Pomodoro Count: " + _pomodoroCount);
+
+        if(_timeLeft != null) {
+            setTimeLeft(_timeLeft);
+        }
+        
+        if(_mode != null) {
+            SwitchMode(_mode);
+        }
+
+        if(_pomodoroCount != null) {
+            setPomodoroCount(pomodoroCount);
+        }
+
+        CalculateTime(_timeLeft);
+    }
+
+    // initialize data from local storage
+    useEffect(() => {
+       onStartup();
+    }, []);
 
     useEffect(() => {
         let timer = null;
