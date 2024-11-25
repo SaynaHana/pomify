@@ -1,4 +1,4 @@
-import ModeButton from "./ModeButton";
+import ModeButton from "./DefaultButton";
 import "./../App.css";
 import { MODES } from "./../utils/Constants";
 

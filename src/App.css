@@ -1,7 +1,7 @@
-
 .App {
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
+  background-color: #594668;
 }
 
 .App-logo {
@@ -15,8 +15,19 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
+.app-header-bar {
+  list-style: none;
+  display: flex;
+  justify-content: right;
+  padding: 20px;
+  margin: 0;
+}
+
+#timer-text {
+  padding: 3px 0 20px 0;
+}
+
+.Timer-background {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,10 +35,6 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-#timer-text {
-  padding: 3px 0 20px 0;
 }
 
 .Timer-button {
@@ -51,7 +58,7 @@
   margin: 5px;
 }
 
-.Mode-button {
+.default-button {
   border: none;
   width: 120px;
   height: 35px;
