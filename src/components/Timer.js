@@ -50,7 +50,7 @@ function Timer() {
 
         // change the time of the timer to the time of the corresponding mode
         if(mode === MODES.POMODORO) {
-            time = 5;
+            time = 1500;
         }
         else if(mode === MODES.SHORT_BREAK) {
             time = 300;

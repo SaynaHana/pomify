@@ -1,8 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono");
 
 .App {
   text-align: center;
-  font-family: "Roboto Mono", Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 .App-logo {
@@ -28,7 +27,7 @@
 }
 
 #timer-text {
-  padding: 5px 0 20px 0;
+  padding: 3px 0 20px 0;
 }
 
 .Timer-button {
@@ -36,7 +35,9 @@
   width: 200px;
   height: 50px;
   font-size: 20px;
-  border-radius: 30px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: #292D34;
 }
 
 .Mode-selection {
@@ -54,8 +55,10 @@
   border: none;
   width: 120px;
   height: 35px;
-  font-size: 18px;
-  border-radius: 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: #292D34;
 }
 
 #pomodoro-count {
