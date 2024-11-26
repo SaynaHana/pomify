@@ -1,7 +1,12 @@
 .App {
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
   background-color: #594668;
+  width: 100%;
+  height: 100%;
 }
 
 .App-logo {
@@ -19,8 +24,13 @@
   list-style: none;
   display: flex;
   justify-content: right;
-  padding: 20px;
+  padding: 20px 20px 0 0;
   margin: 0;
+  width: max-width;
+}
+
+.app-header-bar li {
+  padding: 0 10px 0 10px;
 }
 
 #timer-text {
@@ -28,7 +38,7 @@
 }
 
 .Timer-background {
-  min-height: 100vh;
+  min-height: 75vh;
   display: flex;
   flex-direction: column;
   align-items: center;

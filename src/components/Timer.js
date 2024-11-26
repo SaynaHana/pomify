@@ -134,6 +134,19 @@ function Timer() {
             timer = setInterval(() => {
                 CalculateTime(timeLeft - 1);
                 setTimeLeft((prev) => prev - 1);
+
+                // change name of document
+                let modeName = "Long Break";
+
+                if(currMode === MODES.POMODORO) {
+                    modeName = "Pomodoro"; 
+                }
+                else if(currMode === MODES.SHORT_BREAK) {
+                    modeName = "Short Break";
+                }
+
+                document.title = modeName + ": " + minutes + ":" + String(seconds).padStart(2, "0");
+
             }, 1000);
         }
         else {
