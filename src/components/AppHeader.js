@@ -1,15 +1,16 @@
 import "./../App.css";
+import { PAGES } from "./../utils/Constants";
 import DefaultButton from "./DefaultButton";
 
-function AppHeader() {
+function AppHeader({ onClick }) {
     return(
         <div className="app-header">
             <ul className="app-header-bar">
                 <li>
-                    <DefaultButton text="Timer"/>
+                    <DefaultButton text="Timer" onClick={() => onClick(PAGES.TIMER)}/>
                 </li>
                 <li>
-                    <DefaultButton text="Settings"/>
+                    <DefaultButton text="Settings" onClick={() => onClick(PAGES.SETTINGS)}/>
                 </li>
             </ul> 
         </div>

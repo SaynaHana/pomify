@@ -22,7 +22,7 @@ function Timer() {
     /*
         Calculates the minutes and seconds of time left
     */
-    function CalculateTime(time) {
+    function calculateTime(time) {
         setMinutes(Math.floor(time/60));
         setSeconds(time % 60);
 
@@ -38,7 +38,7 @@ function Timer() {
     /*
         Changes the time to the time of a corresponding mode
     */
-    function SwitchMode(mode) {
+    function switchMode(mode) {
         if(currMode === mode) return; 
 
         setCurrMode(mode);
@@ -60,7 +60,7 @@ function Timer() {
         }
 
         setTimeLeft(time);
-        CalculateTime(time);
+        calculateTime(time);
 
         // cache mode 
         localStorage.setItem("mode", JSON.stringify(mode));
@@ -94,7 +94,7 @@ function Timer() {
             localStorage.setItem("pomodoroCount", JSON.stringify(pomodoroCount + 1));
         }
 
-        SwitchMode(nextMode);
+        switchMode(nextMode);
     }
 
     function onStartup() {
@@ -111,14 +111,14 @@ function Timer() {
         }
         
         if(_mode != null) {
-            SwitchMode(_mode);
+            switchMode(_mode);
         }
 
         if(_pomodoroCount != null) {
             setPomodoroCount(pomodoroCount);
         }
 
-        CalculateTime(_timeLeft);
+        calculateTime(_timeLeft);
     }
 
     // initialize data from local storage
@@ -132,7 +132,7 @@ function Timer() {
         // create interval when timer is running
         if(timerOn) {
             timer = setInterval(() => {
-                CalculateTime(timeLeft - 1);
+                calculateTime(timeLeft - 1);
                 setTimeLeft((prev) => prev - 1);
 
                 // change name of document
@@ -158,7 +158,7 @@ function Timer() {
 
     return (
         <div>
-            <ModeSelection SwitchMode={SwitchMode}/>
+            <ModeSelection SwitchMode={switchMode}/>
             <TimerText minutes={minutes} seconds={seconds}/>
             <TimerButton text={timerOn ? "Pause" : "Start"} onClick={() => {setTimerOn(!timerOn)}}/>
             <h3 id="pomodoro-count">#{pomodoroCount + 1}</h3>
