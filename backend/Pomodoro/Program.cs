@@ -1,11 +1,23 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql;
 using Pomodoro.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/* Add User database */
-builder.Services.AddDbContext<UserDb>(options => options.UseInMemoryDatabase("items"));
+/* Add User database with MySQL */
+var connectionString = $"server={Environment.GetEnvironmentVariable("Server")};user={Environment.GetEnvironmentVariable("User")};password={Environment.GetEnvironmentVariable("Password")};database={Environment.GetEnvironmentVariable("Database")}";
+Console.WriteLine("Connection String: " + connectionString);
+var serverVersion = ServerVersion.AutoDetect(connectionString);
+
+builder.Services.AddDbContext<UserDb>(options => {
+    options.UseMySql(connectionString, serverVersion);
+
+    // TODO: Remove the following 3 lines (which are for debugging)
+    options.LogTo(Console.WriteLine, LogLevel.Information);
+    options.EnableSensitiveDataLogging();
+    options.EnableDetailedErrors();
+});
 
 /* Add Swagger header */
 builder.Services.AddEndpointsApiExplorer();
