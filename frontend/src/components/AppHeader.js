@@ -1,6 +1,7 @@
 import "./../App.css";
 import { PAGES } from "./../utils/Constants";
 import DefaultButton from "./DefaultButton";
+import LoginButton from "./Login";
 
 function AppHeader({ onClick }) {
     return(
@@ -11,6 +12,9 @@ function AppHeader({ onClick }) {
                 </li>
                 <li>
                     <DefaultButton text="Settings" onClick={() => onClick(PAGES.SETTINGS)}/>
+                </li>
+                <li>
+                    <LoginButton></LoginButton>
                 </li>
             </ul> 
         </div>
