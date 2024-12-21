@@ -6,8 +6,7 @@ using Pomodoro.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 /* Add User database with MySQL */
-var connectionString = $"server={Environment.GetEnvironmentVariable("Server")};user={Environment.GetEnvironmentVariable("User")};password={Environment.GetEnvironmentVariable("Password")};database={Environment.GetEnvironmentVariable("Database")}";
-Console.WriteLine("Connection String: " + connectionString);
+var connectionString = builder.Configuration.GetConnectionString("Default");
 var serverVersion = ServerVersion.AutoDetect(connectionString);
 
 builder.Services.AddDbContext<UserDb>(options => {
