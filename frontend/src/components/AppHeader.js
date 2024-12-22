@@ -19,6 +19,10 @@ function AppHeader({ onClick }) {
                 setUser(u);
                 setLoggedIn(true);
             }
+            else {
+                setUser(null);
+                setLoggedIn(false);
+            }
         });
     }, []);
 
