@@ -32,7 +32,7 @@ function AppHeader({ onClick }) {
                     <DefaultButton text="Settings" onClick={() => onClick(PAGES.SETTINGS)}/>
                 </li>
                 <li>
-                    { loggedIn ? <ProfilePicture userIcon={user.ProfilePicture}/> : <LoginButton/> }
+                    { loggedIn ? <ProfilePicture user={user}/> : <LoginButton/> }
                 </li>
             </ul> 
         </div>

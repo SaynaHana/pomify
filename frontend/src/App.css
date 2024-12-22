@@ -89,12 +89,37 @@ body {
   font-weight: normal;
 }
 
+.profile {
+  display: flex;
+  position: relative;
+}
+
 .profile-picture {
   background-color: white;
   aspect-ratio: 1 / 1;
   height: 100%;
   font-size: 12px;
   border-radius: 5px;
+}
+
+.profile-dropdown {
+  background-color: white;
+  translate: -110px 40px;
+  position: absolute;
+  border-radius: 10px;
+  width: 145px;
+  text-align: left;
+}
+
+.profile-dropdown:hover {
+  background-color: rgb(229, 229, 229);
+}
+
+.profile-dropdown ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 5px;
 }
 
 #setting-list {
