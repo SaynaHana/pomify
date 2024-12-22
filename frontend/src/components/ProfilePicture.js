@@ -2,7 +2,7 @@ import { useState } from "react";
 import ProfileDropdown from "./ProfileDropdown";
 import "./../App.css";
 
-function ProfilePicture(user) {
+function ProfilePicture({ photoURL }) {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
 
     function onPictureClicked() {
@@ -12,9 +12,9 @@ function ProfilePicture(user) {
     return(
         <div className="profile">
             <div className="profile-picture" onClick={onPictureClicked}>
-                <img src={user.ProfilePicture} alt="Profile"/>
+                <img src={photoURL} alt="Profile"/>
             </div>
-            { isDropdownVisible && <ProfileDropdown user={user}/> }
+            { isDropdownVisible && <ProfileDropdown/> }
         </div>
     );
 }

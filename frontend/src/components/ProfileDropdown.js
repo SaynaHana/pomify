@@ -3,7 +3,7 @@ import { getAuth, signOut } from "firebase/auth";
 import "./../App.css";
 import DefaultButton from "./DefaultButton";
 
-function ProfileDropdown(user) {
+function ProfileDropdown() {
     async function handleSignOut() {
         const auth = getAuth();
         try {
