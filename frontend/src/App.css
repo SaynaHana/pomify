@@ -89,6 +89,14 @@ body {
   font-weight: normal;
 }
 
+.profile-picture {
+  background-color: white;
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
 #setting-list {
   list-style-type: none;
   display: flex;

@@ -3,6 +3,7 @@ import Timer from "./components/Timer";
 import Settings from "./components/Settings";
 import AppHeader from "./components/AppHeader";
 import { PAGES, VISIBILITY } from "./utils/Constants";
+import { loggedIn } from "./utils/Firebase";
 import "./App.css";
 
 function App() {
