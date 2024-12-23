@@ -3,11 +3,13 @@ import Timer from "./components/Timer";
 import Settings from "./components/Settings";
 import AppHeader from "./components/AppHeader";
 import { PAGES, VISIBILITY } from "./utils/Constants";
-import { loggedIn } from "./utils/Firebase";
+import AuthProvider from "./hooks/AuthContext";
+import { getAuth } from "firebase/auth";
 import "./App.css";
 
 function App() {
   const [currPage, setCurrPage] = useState(PAGES.TIMER);
+  const auth = getAuth();
 
   // controls the visibilities of pages
   const [visibilities, setVisibilities] = useState([true, false]);
@@ -24,7 +26,9 @@ function App() {
 
   return (
     <div className="App">
-      <AppHeader onClick={switchPages}/>
+      <AuthProvider auth={auth}>
+        <AppHeader onClick={switchPages}/>
+      </AuthProvider>
       { visibilities[PAGES.TIMER] && <Timer/> }
       { visibilities[PAGES.SETTINGS] && <Settings/> }
     </div>

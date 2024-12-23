@@ -3,28 +3,11 @@ import { PAGES } from "./../utils/Constants";
 import DefaultButton from "./DefaultButton";
 import LoginButton from "./Login";
 import ProfilePicture from "./ProfilePicture";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react";
+import { useAuth } from "../hooks/AuthContext";
 
 function AppHeader({ onClick }) {
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [user, setUser] = useState(null);
-
-    // on start, check if user is signed in
-    useEffect(() => {
-        const auth = getAuth();
-        // u is user
-        onAuthStateChanged(auth, (u) => {
-            if(u) {
-                setUser(u);
-                setLoggedIn(true);
-            }
-            else {
-                setUser(null);
-                setLoggedIn(false);
-            }
-        });
-    }, []);
+    const auth = useAuth();
 
     return(
         <div className="app-header">
@@ -36,7 +19,7 @@ function AppHeader({ onClick }) {
                     <DefaultButton text="Settings" onClick={() => onClick(PAGES.SETTINGS)}/>
                 </li>
                 <li>
-                    { loggedIn ? <ProfilePicture photoURL={user.photoURL}/> : <LoginButton/> }
+                    { auth.isLoggedIn && auth.user !== null ? <ProfilePicture photoURL={auth.user.photoURL}/> : <LoginButton/> }
                 </li>
             </ul> 
         </div>
