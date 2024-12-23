@@ -1,9 +1,16 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql;
 using Pomodoro.Models;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 
 var builder = WebApplication.CreateBuilder(args);
+
+/* Setup Firebase */
+FirebaseApp.Create(new AppOptions() {
+    Credential = GoogleCredential.GetApplicationDefault(),
+    ProjectId = "pomodoro-87ff7"
+});
 
 /* Add User database with MySQL */
 var connectionString = builder.Configuration.GetConnectionString("Default");
