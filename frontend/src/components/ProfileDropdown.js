@@ -1,23 +1,14 @@
 import React from "react";
-import { getAuth, signOut } from "firebase/auth";
 import "./../App.css";
 import DefaultButton from "./DefaultButton";
+import { useAuth } from "./../hooks/AuthContext";
 
 function ProfileDropdown() {
-    async function handleSignOut() {
-        const auth = getAuth();
-        try {
-            await signOut(auth);
-            console.log("Signed out successfully.");
-        }
-        catch(error) {
-            console.error("Error occured on sign out: ", error);
-        }
-    }
+    const auth = useAuth();    
 
     return(
         <div className="profile-dropdown">
-            <DefaultButton text="Sign out" onClick={handleSignOut}/>
+            <DefaultButton text="Sign out" onClick={auth.handleSignOut}/>
         </div>
     );
 }
