@@ -9,6 +9,7 @@ function AuthProvider({ auth, children }) {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
 
+    /* Shows user the sign in with Google popup */
     function signIn() {
         signInWithPopup(auth, googleProvider)
             .then((result) => {
@@ -16,7 +17,6 @@ function AuthProvider({ auth, children }) {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
                 const user = result.user;
-                console.log(user.getIdToken());
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
