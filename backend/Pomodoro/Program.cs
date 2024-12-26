@@ -2,16 +2,17 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 /* Setup CORS */
 builder.Services.AddCors(options => {
-    options.AddPolicy(name: "AllowSpecificOrigins",
+    options.AddPolicy(name: "PomodoroPolicy",
         policy => {
-            policy.WithOrigins("http://localhost:3000");
-            policy.AllowAnyHeader();
-            policy.AllowAnyMethod();
+            policy.WithOrigins("http://localhost:3000")
+            .WithHeaders(HeaderNames.ContentType, HeaderNames.Authorization)
+            .AllowAnyMethod();
         }
     ); 
 });
@@ -19,8 +20,9 @@ builder.Services.AddCors(options => {
 /* Setup Firebase */
 FirebaseApp.Create(new AppOptions() {
     Credential = GoogleCredential.GetApplicationDefault(),
-    ProjectId = "pomodoro-87ff7"
+    ProjectId = builder.Configuration.GetSection("Firebase")["ProjectId"]
 });
+
 
 /* Add User database with MySQL */
 var connectionString = builder.Configuration.GetConnectionString("Default");
@@ -61,7 +63,7 @@ if(builder.Environment.IsDevelopment())
     });
 }
 
-app.UseCors("AllowSpecificOrigins");
+app.UseCors("PomodoroPolicy");
 
 /* Map endpoints (found in UserApi.cs) */
 app.MapUserEndpoints();

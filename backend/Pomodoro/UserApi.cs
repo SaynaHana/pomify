@@ -14,19 +14,29 @@ public static class UserApi
         app.MapGet("/users", async (UserDb db) => await db.Users.ToListAsync());
 
         /* Creates a user */
-        app.MapPost("/user", async (UserDb db, User user, string token) => 
+        app.MapPost("/user", async (UserDb db, User user, HttpRequest request) => 
         {
-            // verify the given token 
-            IResult tokenTask = await VerifyToken(token);
-
-            // try to get uid
-            if(tokenTask is Ok<string> uidResult) 
+            // get token from authorization header
+            if(request.Headers.ContainsKey("Authorization") &&
+                request.Headers["Authorization"][0].StartsWith("Bearer ")) 
             {
-                // if uid exists, then set user uid
-                if(uidResult.Value != null) 
+                var token = request.Headers["Authorization"][0].Substring("Bearer ".Length);
+                // verify the given token 
+                IResult tokenTask = await VerifyToken(token);
+
+                // try to get uid
+                if(tokenTask is Ok<string> uidResult) 
                 {
-                    string uid = uidResult.Value; 
-                    user.Uid = uid;
+                    // if uid exists, then set user uid
+                    if(uidResult.Value != null) 
+                    {
+                        string uid = uidResult.Value; 
+                        user.Uid = uid;
+                    }
+                    else 
+                    {
+                        return Results.NotFound();
+                    }
                 }
                 else 
                 {
@@ -35,8 +45,9 @@ public static class UserApi
             }
             else 
             {
-                return Results.NotFound();
+                return Results.Unauthorized();
             }
+
 
             // if we have a uid, check if the uid already exists in the database
             // if it does, then return an error
@@ -45,14 +56,6 @@ public static class UserApi
             if(userInDB) 
             {
                 return Results.Conflict();
-            }
-
-            // get user's name from firebase
-            UserRecord userRecord = await GetFBUserData(user.Uid);
-
-            if(userRecord != null) 
-            {
-                user.Name = userRecord.DisplayName;
             }
 
             await db.Users.AddAsync(user);
@@ -65,7 +68,6 @@ public static class UserApi
         {
             var user = await db.Users.FindAsync(id);
             if(user is null) return Results.NotFound();
-            user.Name = updateUser.Name;
             user.TimeSpent = updateUser.TimeSpent;
             user.Streak = updateUser.Streak;
             user.MaxStreak = updateUser.MaxStreak;
@@ -119,11 +121,5 @@ public static class UserApi
     private static async Task<bool> UserInDB(UserDb db, string uid) 
     {
         return await db.Users.FirstOrDefaultAsync(u => u.Uid == uid) != null;
-    }
-
-    /* Given a uid, get user data from Firebase */
-    private static async Task<UserRecord> GetFBUserData(string uid) 
-    {
-        return await FirebaseAuth.DefaultInstance.GetUserAsync(uid);
     }
 }

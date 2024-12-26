@@ -16,11 +16,15 @@ function AuthProvider({ auth, children }) {
             .then((result) => {
                 // given a google access token on success
                 const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
                 const user = result.user;
-                
-                // attempt to create user on sign in
-                createUser(user, user.getIdToken());
+
+                // attempt to add user to database
+                user.getIdToken().then(function(token) {
+                    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+                    // attempt to create user on sign in
+                    createUser();
+                });
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -40,10 +44,8 @@ function AuthProvider({ auth, children }) {
     }
 
     /* Tries to create user by sending request to backend API */
-    function createUser(user, token) {
+    function createUser() {
         axios.post(process.env.REACT_APP_BACKEND_URL + "/user", {
-            token: token,
-            user: {} 
         })
         .then(function (response) {
             console.log("Create user response: " + response);

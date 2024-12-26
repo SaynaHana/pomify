@@ -6,7 +6,6 @@ namespace Pomodoro.Models
     {
         public int Id { get; set; } // id for database indexing
         public string? Uid { get; set; } // id from firebase authentication
-        public string? Name { get; set;}
         public int TimeSpent { get; set; } // cumulative time spent in "Pomodoro" mode in minutes
         public int Streak { get; set; } // days doing a Pomodoro
         public int MaxStreak {get; set; }

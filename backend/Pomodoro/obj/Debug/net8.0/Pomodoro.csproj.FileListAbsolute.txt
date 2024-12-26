@@ -1,5 +1,4 @@
 /home/aria/source/pomodoro/backend/Pomodoro/bin/Debug/net8.0/appsettings.Development.json
-/home/aria/source/pomodoro/backend/Pomodoro/bin/Debug/net8.0/appsettings.json
 /home/aria/source/pomodoro/backend/Pomodoro/bin/Debug/net8.0/Pomodoro
 /home/aria/source/pomodoro/backend/Pomodoro/bin/Debug/net8.0/Pomodoro.deps.json
 /home/aria/source/pomodoro/backend/Pomodoro/bin/Debug/net8.0/Pomodoro.runtimeconfig.json
@@ -16,7 +15,6 @@
 /home/aria/source/pomodoro/backend/Pomodoro/obj/Debug/net8.0/Pomodoro.csproj.CoreCompileInputs.cache
 /home/aria/source/pomodoro/backend/Pomodoro/obj/Debug/net8.0/Pomodoro.MvcApplicationPartsAssemblyInfo.cs
 /home/aria/source/pomodoro/backend/Pomodoro/obj/Debug/net8.0/Pomodoro.MvcApplicationPartsAssemblyInfo.cache
-/home/aria/source/pomodoro/backend/Pomodoro/obj/Debug/net8.0/Pomodoro.sourcelink.json
 /home/aria/source/pomodoro/backend/Pomodoro/obj/Debug/net8.0/staticwebassets.build.json
 /home/aria/source/pomodoro/backend/Pomodoro/obj/Debug/net8.0/staticwebassets.development.json
 /home/aria/source/pomodoro/backend/Pomodoro/obj/Debug/net8.0/staticwebassets/msbuild.Pomodoro.Microsoft.AspNetCore.StaticWebAssets.props
