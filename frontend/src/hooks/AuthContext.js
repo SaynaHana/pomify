@@ -2,6 +2,7 @@ import { useContext, createContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { googleProvider } from "../utils/Firebase";
 import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -17,6 +18,9 @@ function AuthProvider({ auth, children }) {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
                 const user = result.user;
+                
+                // attempt to create user on sign in
+                createUser(user, user.getIdToken());
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -33,6 +37,20 @@ function AuthProvider({ auth, children }) {
         catch(error) {
             console.error("Error occured on sign out: ", error);
         }
+    }
+
+    /* Tries to create user by sending request to backend API */
+    function createUser(user, token) {
+        axios.post(process.env.REACT_APP_BACKEND_URL + "/user", {
+            token: token,
+            user: {} 
+        })
+        .then(function (response) {
+            console.log("Create user response: " + response);
+        })
+        .catch(function (error) {
+            console.log("Create user error: " + error);
+        });
     }
 
     useEffect(() => {

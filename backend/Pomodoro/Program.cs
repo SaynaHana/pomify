@@ -5,6 +5,17 @@ using Google.Apis.Auth.OAuth2;
 
 var builder = WebApplication.CreateBuilder(args);
 
+/* Setup CORS */
+builder.Services.AddCors(options => {
+    options.AddPolicy(name: "AllowSpecificOrigins",
+        policy => {
+            policy.WithOrigins("http://localhost:3000");
+            policy.AllowAnyHeader();
+            policy.AllowAnyMethod();
+        }
+    ); 
+});
+
 /* Setup Firebase */
 FirebaseApp.Create(new AppOptions() {
     Credential = GoogleCredential.GetApplicationDefault(),
@@ -18,10 +29,13 @@ var serverVersion = ServerVersion.AutoDetect(connectionString);
 builder.Services.AddDbContext<UserDb>(options => {
     options.UseMySql(connectionString, serverVersion);
 
-    // TODO: Remove the following 3 lines (which are for debugging)
-    options.LogTo(Console.WriteLine, LogLevel.Information);
-    options.EnableSensitiveDataLogging();
-    options.EnableDetailedErrors();
+    // optional logs for debugging
+    if(builder.Environment.IsDevelopment()) 
+    {
+        options.LogTo(Console.WriteLine, LogLevel.Information);
+        options.EnableSensitiveDataLogging();
+        options.EnableDetailedErrors();
+    }
 });
 
 /* Add Swagger header */
@@ -46,6 +60,8 @@ if(builder.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pomodoro API V1");
     });
 }
+
+app.UseCors("AllowSpecificOrigins");
 
 /* Map endpoints (found in UserApi.cs) */
 app.MapUserEndpoints();

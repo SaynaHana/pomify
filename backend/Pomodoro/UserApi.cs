@@ -42,7 +42,7 @@ public static class UserApi
             // if it does, then return an error
             bool userInDB = await UserInDB(db, user.Uid);
 
-            if(!userInDB) 
+            if(userInDB) 
             {
                 return Results.Conflict();
             }
