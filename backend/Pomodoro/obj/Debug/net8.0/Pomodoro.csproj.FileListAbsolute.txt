@@ -111,3 +111,4 @@
 /home/aria/source/pomodoro/backend/Pomodoro/bin/Debug/net8.0/Newtonsoft.Json.dll
 /home/aria/source/pomodoro/backend/Pomodoro/bin/Debug/net8.0/System.Management.dll
 /home/aria/source/pomodoro/backend/Pomodoro/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Management.dll
+/home/aria/source/pomodoro/backend/Pomodoro/obj/Debug/net8.0/Pomodoro.sourcelink.json

@@ -58,6 +58,11 @@ public static class UserApi
                 return Results.Conflict();
             }
 
+            // change max streak threshold to default is currently set to 0
+            if(user.StreakThreshold == 0) {
+                user.StreakThreshold = 25;
+            }
+
             await db.Users.AddAsync(user);
             await db.SaveChangesAsync();
             return Results.Created($"/user/{user.Id}", user);
