@@ -57,7 +57,10 @@ function AuthProvider({ auth, children }) {
 
     /* Tries to get the user from the backend database and then returns it */
     function getUserFromDb() {
-
+        axios.post(process.env.REACT_APP_BACKEND_URL + "/user/data", {
+        }).then(function (response) {
+            console.log(response.data);
+        });
     }
 
     useEffect(() => {
@@ -74,7 +77,7 @@ function AuthProvider({ auth, children }) {
     }, []);
 
     return(
-        <AuthContext.Provider value={{user, isLoggedIn, signIn, handleSignOut}}>
+        <AuthContext.Provider value={{user, isLoggedIn, signIn, handleSignOut, getUserFromDb}}>
             {children}
         </AuthContext.Provider>
     );

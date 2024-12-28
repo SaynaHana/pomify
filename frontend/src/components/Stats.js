@@ -8,6 +8,10 @@ import { useAuth } from "../hooks/AuthContext";
 function Stats() {
     const auth = useAuth();
 
+    useEffect(() => {
+        auth.getUserFromDb();
+    }); 
+
     return(
         <div>
             <div className="background">

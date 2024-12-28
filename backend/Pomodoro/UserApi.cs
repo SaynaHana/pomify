@@ -1,10 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pomodoro.Models;
-using FirebaseAdmin;
 using FirebaseAdmin.Auth;
-using FirebaseAdmin.Messaging;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 public static class UserApi 
 {
@@ -14,6 +11,24 @@ public static class UserApi
         app.MapGet("/users", async (UserDb db) => await db.Users.ToListAsync());
 
         /* Returns a user using token */
+        app.MapPost("/user/data", async (UserDb db, HttpRequest request) => 
+        {
+            // get uid from token
+            IResult uidResult = await GetUidFromToken(request);
+
+            if(uidResult is Ok<string> uid) 
+            {
+                if(uid.Value != null) 
+                {
+                    // note that the user gotten from here will have the uid removed for security reasons
+                    var user = await GetUserByUid(db, uid.Value);
+
+                    if(user != null) return Results.Ok(user);
+                }
+            }
+
+            return Results.NotFound();
+        });
 
         /* Creates a user */
         app.MapPost("/user", async (UserDb db, User user, HttpRequest request) => 
@@ -151,9 +166,28 @@ public static class UserApi
         }
     }
 
-    /* Returns true if a UID corresponds to a user that is already in the database */
+    /* Returns true if a Uid corresponds to a user that is already in the database */
     private static async Task<bool> UserInDB(UserDb db, string uid) 
     {
         return await db.Users.FirstOrDefaultAsync(u => u.Uid == uid) != null;
+    }
+
+    /* Returns the first user with the given Uid in the database */
+    private static async Task<User> GetUserByUid(UserDb db, string uid) 
+    {
+        // find the user in the database
+        User user = await db.Users.FirstOrDefaultAsync(u => u.Uid == uid);
+
+        if(user != null) 
+        {
+            // create copy of user and remove the uid
+            User copy = User.Copy(user);
+
+            copy.Uid = null;
+
+            return copy;
+        }
+
+        return user;
     }
 }
