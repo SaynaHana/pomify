@@ -111,6 +111,7 @@ public static class UserApi
         }
         else 
         {
+            Console.WriteLine("test 1");
             return Results.BadRequest();
         }
     }
@@ -152,16 +153,19 @@ public static class UserApi
                     return Results.Ok(uid.Value); 
                 }
                 else {
+                    Console.WriteLine("test 2");
                     return Results.BadRequest();
                 }
             }
             else 
             {
+                Console.WriteLine("test 3");
                 return Results.BadRequest();
             }
         }
         else 
         {
+            Console.WriteLine("test 4");
             return Results.BadRequest();
         }
     }
@@ -175,6 +179,7 @@ public static class UserApi
     /* Returns the first user with the given Uid in the database */
     private static async Task<User> GetUserByUid(UserDb db, string uid) 
     {
+        Console.WriteLine("UID: " + uid);
         // find the user in the database
         User user = await db.Users.FirstOrDefaultAsync(u => u.Uid == uid);
 

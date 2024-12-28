@@ -56,11 +56,17 @@ function AuthProvider({ auth, children }) {
     }
 
     /* Tries to get the user from the backend database and then returns it */
-    function getUserFromDb() {
-        axios.post(process.env.REACT_APP_BACKEND_URL + "/user/data", {
+    async function getUserFromDb() {
+        let userData = null;        
+
+        await axios.post(process.env.REACT_APP_BACKEND_URL + "/user/data", {
         }).then(function (response) {
-            console.log(response.data);
+            userData = response.data;
+        }).catch(function (error) {
+            console.log("Get User From Db Error: " + error);
         });
+
+        return userData;
     }
 
     useEffect(() => {
@@ -68,6 +74,11 @@ function AuthProvider({ auth, children }) {
             if(u) {
                 setUser(u);
                 setLoggedIn(true);
+
+                // set the token
+                u.getIdToken().then(function(token) {
+                    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+                });
             } 
             else {
                 setUser(null);
