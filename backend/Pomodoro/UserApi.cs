@@ -13,41 +13,21 @@ public static class UserApi
         /* Returns list of users */
         app.MapGet("/users", async (UserDb db) => await db.Users.ToListAsync());
 
+        /* Returns a user using token */
+
         /* Creates a user */
         app.MapPost("/user", async (UserDb db, User user, HttpRequest request) => 
         {
-            // get token from authorization header
-            if(request.Headers.ContainsKey("Authorization") &&
-                request.Headers["Authorization"][0].StartsWith("Bearer ")) 
-            {
-                var token = request.Headers["Authorization"][0].Substring("Bearer ".Length);
-                // verify the given token 
-                IResult tokenTask = await VerifyToken(token);
+            // get uid from token
+            IResult uidResult = await GetUidFromToken(request);
 
-                // try to get uid
-                if(tokenTask is Ok<string> uidResult) 
+            if(uidResult is Ok<string> uid) 
+            {
+                if(uid.Value != null) 
                 {
-                    // if uid exists, then set user uid
-                    if(uidResult.Value != null) 
-                    {
-                        string uid = uidResult.Value; 
-                        user.Uid = uid;
-                    }
-                    else 
-                    {
-                        return Results.NotFound();
-                    }
-                }
-                else 
-                {
-                    return Results.NotFound();
+                    user.Uid = uid.Value;
                 }
             }
-            else 
-            {
-                return Results.Unauthorized();
-            }
-
 
             // if we have a uid, check if the uid already exists in the database
             // if it does, then return an error
@@ -105,6 +85,23 @@ public static class UserApi
         });
     }
 
+    /* Parses token from authorization header */
+    private static async Task<IResult> ParseToken(HttpRequest request) 
+    {
+        // get token from authorization header
+        if(request.Headers.ContainsKey("Authorization") &&
+            request.Headers["Authorization"][0].StartsWith("Bearer ")) 
+        {
+            return Results.Ok(request.Headers["Authorization"][0].Substring("Bearer ".Length));
+        }
+        else 
+        {
+            return Results.BadRequest();
+        }
+    }
+
+
+    /* Verifies token. Returns UID if no error */
     private static async Task<IResult> VerifyToken(string token) 
     {
         try 
@@ -119,6 +116,38 @@ public static class UserApi
             // invalid token
             Console.WriteLine("Error: " + ex);
             return Results.NotFound();
+        }
+    }
+
+    /* Returns the Uid from token given by authorization header if there are no errors */
+    private static async Task<IResult> GetUidFromToken(HttpRequest request) 
+    {
+        // parse token
+        IResult parsedResult = await ParseToken(request);
+
+        if(parsedResult is Ok<string> token) 
+        {
+            if(token.Value != null) 
+            {
+                // verify token which returns uid
+                IResult uidResult = await VerifyToken(token.Value); 
+                
+                if(uidResult is Ok<string> uid) 
+                {
+                    return Results.Ok(uid.Value); 
+                }
+                else {
+                    return Results.BadRequest();
+                }
+            }
+            else 
+            {
+                return Results.BadRequest();
+            }
+        }
+        else 
+        {
+            return Results.BadRequest();
         }
     }
 

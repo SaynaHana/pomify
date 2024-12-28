@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Timer from "./components/Timer";
+import Stats from "./components/Stats";
 import Settings from "./components/Settings";
 import AppHeader from "./components/AppHeader";
 import { PAGES, VISIBILITY } from "./utils/Constants";
@@ -28,9 +29,10 @@ function App() {
     <div className="App">
       <AuthProvider auth={auth}>
         <AppHeader onClick={switchPages}/>
+        { visibilities[PAGES.TIMER] && <Timer/> }
+        { visibilities[PAGES.STATS] && <Stats/>}
+        { visibilities[PAGES.SETTINGS] && <Settings/> }
       </AuthProvider>
-      { visibilities[PAGES.TIMER] && <Timer/> }
-      { visibilities[PAGES.SETTINGS] && <Settings/> }
     </div>
   );
 }

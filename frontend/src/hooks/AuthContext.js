@@ -55,6 +55,11 @@ function AuthProvider({ auth, children }) {
         });
     }
 
+    /* Tries to get the user from the backend database and then returns it */
+    function getUserFromDb() {
+
+    }
+
     useEffect(() => {
         onAuthStateChanged(auth, (u) => {
             if(u) {

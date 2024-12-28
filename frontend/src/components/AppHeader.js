@@ -16,6 +16,9 @@ function AppHeader({ onClick }) {
                     <DefaultButton text="Timer" onClick={() => onClick(PAGES.TIMER)}/>
                 </li>
                 <li>
+                    <DefaultButton text="Stats" onClick={() => onClick(PAGES.STATS)}/>
+                </li>
+                <li>
                     <DefaultButton text="Settings" onClick={() => onClick(PAGES.SETTINGS)}/>
                 </li>
                 <li>
