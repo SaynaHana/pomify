@@ -16,16 +16,14 @@ public static class UserApi
         {
             // get uid from token
             IResult uidResult = await ApiUtil.GetUidFromToken(request);
+            string? uid = ApiUtil.GetUIDFromResult(uidResult);
 
-            if(uidResult is Ok<string> uid) 
+            if(uid != null) 
             {
-                if(uid.Value != null) 
-                {
-                    // note that the user gotten from here will have the uid removed for security reasons
-                    var user = await ApiUtil.GetUserByUid(db, uid.Value);
+                // note that the user gotten from here will have the uid removed for security reasons
+                var user = await ApiUtil.GetUserByUid(db, uid);
 
-                    if(user != null) return Results.Ok(user);
-                }
+                if(user != null) return Results.Ok(user);
             }
 
             return Results.NotFound();
@@ -36,12 +34,13 @@ public static class UserApi
         {
             // get uid from token
             IResult uidResult = await ApiUtil.GetUidFromToken(request);
+            string? uid = ApiUtil.GetUIDFromResult(uidResult);
 
-            if(uidResult is Ok<string> uid) 
+            if(uid != null) 
             {
-                if(uid.Value != null) 
+                if(uid != null) 
                 {
-                    user.Uid = uid.Value;
+                    user.Uid = uid;
                 }
             }
 

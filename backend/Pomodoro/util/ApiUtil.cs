@@ -99,5 +99,15 @@ namespace Pomodoro.Util
 
             return user;
         }
+
+        public static string? GetUIDFromResult(IResult result) 
+        {
+            if(result is Ok<string> uid) 
+            {
+                return uid.Value;
+            }
+            
+            return null;
+        }
     }
 }
