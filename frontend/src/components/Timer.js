@@ -7,18 +7,21 @@ import "./../App.css";
 import { MODES } from "./../utils/Constants";
 import useSound from "use-sound";
 import endSound from "../assets/audio/bell.mp3"
+import { useAuth } from "./../hooks/AuthContext";
 
 /*
     Component for the timer
 */
 function Timer() {
     const [timeLeft, setTimeLeft] = useState(1500);
+    const [timeElapsed, setTimeElapsed] = useState(0);
     const [timerOn, setTimerOn] = useState(false);
     const [minutes, setMinutes] = useState(25);
     const [seconds, setSeconds] = useState(0);
     const [currMode, setCurrMode] = useState(MODES.POMODORO);
     const [pomodoroCount, setPomodoroCount] = useState(0);
     const [playSound] = useSound(endSound, { volume: 0.1 });
+    const auth = useAuth();
 
     /*
         Calculates the minutes and seconds of time left
@@ -60,6 +63,7 @@ function Timer() {
             time = 1800;
         }
 
+        setTimeElapsed(0);
         setTimeLeft(time);
         calculateTime(time);
 
@@ -90,6 +94,9 @@ function Timer() {
             }
 
             setPomodoroCount((prev) => prev + 1);
+
+            // update daily user data
+            auth.updateDailyUserData(timeElapsed);
             
             // cache pomodoro count
             localStorage.setItem("pomodoroCount", JSON.stringify(pomodoroCount + 1));
@@ -137,6 +144,7 @@ function Timer() {
 
                 if(currMode === MODES.POMODORO) {
                     modeName = "Pomodoro"; 
+                    setTimeElapsed((prev) => prev + 1);
                 }
                 else if(currMode === MODES.SHORT_BREAK) {
                     modeName = "Short Break";

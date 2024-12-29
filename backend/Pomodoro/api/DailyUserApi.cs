@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pomodoro.Models;
 using Pomodoro.Util;
@@ -7,12 +8,12 @@ public static class DailyUserApi
     public static void MapDailyUserEndpoints(this WebApplication app) 
     {
         /* Gets current server date */
-        app.MapGet("date", async () => {
+        app.MapGet("/date", async () => {
             return DateTime.Today.ToString("d");
         });
 
         /* Adds or updates a new row to daily user table with new time spent */
-        app.MapPost("/daily_user", async (UserDb db, HttpRequest request, int timeSpent) => {
+        app.MapPost("/daily_user", async (UserDb db, HttpRequest request, DailyUserData dailyData) => {
             // get current date            
             string date = DateTime.Today.ToString("d");
 
@@ -21,26 +22,28 @@ public static class DailyUserApi
             IResult uidResult = await ApiUtil.GetUidFromToken(request);
             string? uid = ApiUtil.GetUIDFromResult(uidResult);
 
+            Console.WriteLine("Time spent: " + dailyData.TimeSpent);
+
             if(uid != null) 
             {
-                // check if there is an entry in the daily users table with the current date and uid
-                DailyUserData? daily = await db.DailyUsers.FirstOrDefaultAsync(u => u.Uid == uid && u.Date == date);
+                DailyUserData? daily = await db.Set<DailyUserData>().FirstOrDefaultAsync(d => d.Uid == uid && d.Date == date);
 
-                // case 1: the row does exist (i.e the user already spent time today)
+                // case 1: the user has already used the app at least one time
                 if(daily != null) 
                 {
-                    // update the time spent
-                    daily.TimeSpent += timeSpent;
+                    // update time spent 
+                    daily.TimeSpent += dailyData.TimeSpent;
 
                     await db.SaveChangesAsync();
                 }
-                // case 2: the row does not exist (i.e this is the first time the user is using the app today)
+                // case 2: the user is using the app for the first time today
                 else 
                 {
-                    // create new row and add to database
-                    DailyUserData newDaily = new DailyUserData(uid, date, timeSpent);
+                    // create new entry
+                    DailyUserData newData = new DailyUserData(uid, date, dailyData.TimeSpent);
 
-                    await db.AddAsync(newDaily);
+                    await db.AddAsync(newData);
+                    await db.SaveChangesAsync();
                 }
             }
             else 

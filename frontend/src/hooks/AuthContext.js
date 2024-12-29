@@ -69,6 +69,18 @@ function AuthProvider({ auth, children }) {
         return userData;
     }
 
+    /* Tries to update daily user data */
+    async function updateDailyUserData(timeSpent) {
+        console.log("time spent: " + timeSpent);
+        axios.post(process.env.REACT_APP_BACKEND_URL + "/daily_user", {
+            TimeSpent: timeSpent 
+        }).then(function (response) {
+            console.log("Daily User Data Update successful.");
+        }).catch(function(error) {
+            console.error("Daily User Data Update: error: " + error);
+        });
+    }
+
     useEffect(() => {
         onAuthStateChanged(auth, (u) => {
             if(u) {
@@ -88,7 +100,7 @@ function AuthProvider({ auth, children }) {
     }, []);
 
     return(
-        <AuthContext.Provider value={{user, isLoggedIn, signIn, handleSignOut, getUserFromDb}}>
+        <AuthContext.Provider value={{user, isLoggedIn, signIn, handleSignOut, getUserFromDb, updateDailyUserData}}>
             {children}
         </AuthContext.Provider>
     );
