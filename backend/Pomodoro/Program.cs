@@ -65,7 +65,8 @@ if(builder.Environment.IsDevelopment())
 
 app.UseCors("PomodoroPolicy");
 
-/* Map endpoints (found in UserApi.cs) */
+/* Map endpoints (found in UserApi.cs and DailyUserApi) */
 app.MapUserEndpoints();
+app.MapDailyUserEndpoints();
 
 app.Run();

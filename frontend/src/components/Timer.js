@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import TimerText from "./TimerText";
 import TimerButton from "./TimerButton";
 import ModeSelection from "./ModeSelection";
+import DefaultButton from "./DefaultButton";
 import "./../App.css";
 import { MODES } from "./../utils/Constants";
 import useSound from "use-sound";
@@ -102,10 +103,6 @@ function Timer() {
         const _mode = JSON.parse(localStorage.getItem("mode"));
         const _pomodoroCount = JSON.parse(localStorage.getItem("pomodoroCount"));
 
-        console.log("Time Left: " + _timeLeft);
-        console.log("Mode: " + _mode);
-        console.log("Pomodoro Count: " + _pomodoroCount);
-
         if(_timeLeft != null) {
             setTimeLeft(_timeLeft);
         }
@@ -161,7 +158,10 @@ function Timer() {
             <div className="timer-background">
             <ModeSelection SwitchMode={switchMode}/>
             <TimerText minutes={minutes} seconds={seconds}/>
-            <TimerButton text={timerOn ? "Pause" : "Start"} onClick={() => {setTimerOn(!timerOn)}}/>
+            <div className="timer-buttons">
+                <TimerButton text={timerOn ? "Pause" : "Start"} onClick={() => {setTimerOn(!timerOn)}}/>
+                <DefaultButton text="Skip" onClick={onTimerEnd}/>
+            </div>
             <h3 id="pomodoro-count">#{pomodoroCount + 1}</h3>
             </div>
         </div>
