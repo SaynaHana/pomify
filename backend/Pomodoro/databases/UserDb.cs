@@ -1,7 +1,7 @@
 using Pomodoro.Models;
 using Microsoft.EntityFrameworkCore;
 
-class UserDb: DbContext 
+public class UserDb: DbContext 
 {
     public UserDb(DbContextOptions options) : base(options) {}
     public DbSet<User> Users { get; set; } = null!;
