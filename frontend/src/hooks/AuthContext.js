@@ -71,7 +71,6 @@ function AuthProvider({ auth, children }) {
 
     /* Tries to update daily user data */
     async function updateDailyUserData(timeSpent) {
-        console.log("time spent: " + timeSpent);
         axios.post(process.env.REACT_APP_BACKEND_URL + "/daily_user", {
             TimeSpent: timeSpent 
         }).then(function (response) {
@@ -90,7 +89,15 @@ function AuthProvider({ auth, children }) {
                 // set the token
                 u.getIdToken().then(function(token) {
                     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+                    // update streak
+                    axios.post(process.env.REACT_APP_BACKEND_URL + "/streak"
+                    ).then(function (response) {
+                    }).catch(function (error) {
+                        console.log("Log in error: " + error);
+                    });
                 });
+
             } 
             else {
                 setUser(null);

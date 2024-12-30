@@ -98,6 +98,7 @@ public static class UserApi
         app.MapPost("/verify_token", async (UserDb db, string token) => {
             return await ApiUtil.VerifyToken(token);
         });
+
     }
 
 }
