@@ -13,7 +13,6 @@ function Stats() {
         async function getUser() {
             const userData = await auth.getUserFromDb();   
             setUser(userData);
-            console.log(userData);
         }
 
         getUser();
@@ -25,9 +24,10 @@ function Stats() {
             <div className="background">
                 <h2 className="sub-header">Stats</h2>
                 { auth.isLoggedIn && user != null ? 
-                    <div>
+                    <div className="stats">
                         <p>Streak: {user.streak}</p>
                         <p>Longest Streak: {user.maxStreak}</p>
+                        <p>Cumulative Time in Pomodoro: {user.timeSpent} mins</p>
                     </div>
                     :
                     <div>
