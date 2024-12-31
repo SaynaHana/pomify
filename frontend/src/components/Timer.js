@@ -96,7 +96,9 @@ function Timer() {
             setPomodoroCount((prev) => prev + 1);
 
             // update daily user data
-            auth.updateDailyUserData(timeElapsed);
+            // get time elapsed in minutes (rounded)
+            const time = Math.round(timeElapsed / 60);
+            auth.updateDailyUserData(time);
             
             // cache pomodoro count
             localStorage.setItem("pomodoroCount", JSON.stringify(pomodoroCount + 1));
