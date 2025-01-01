@@ -7,5 +7,6 @@ export const MODES = Object.freeze({
 export const PAGES = Object.freeze({
     TIMER: 0,
     STATS: 1,
-    SETTINGS: 2
+    SETTINGS: 2,
+    PRIVACY: 3
 });

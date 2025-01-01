@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import Timer from "./components/Timer";
 import Stats from "./components/Stats";
 import Settings from "./components/Settings";
+import PrivacyPolicy from "./components/PrivacyPolicy";
 import AppHeader from "./components/AppHeader";
+import AppFooter from "./components/AppFooter";
 import { PAGES, VISIBILITY } from "./utils/Constants";
 import AuthProvider from "./hooks/AuthContext";
 import { getAuth } from "firebase/auth";
@@ -32,6 +34,8 @@ function App() {
         { visibilities[PAGES.TIMER] && <Timer/> }
         { visibilities[PAGES.STATS] && <Stats/>}
         { visibilities[PAGES.SETTINGS] && <Settings/> }
+        { visibilities[PAGES.PRIVACY] && <PrivacyPolicy/>}
+        <AppFooter onClick={switchPages}/>
       </AuthProvider>
     </div>
   );
