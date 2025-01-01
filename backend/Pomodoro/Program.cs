@@ -23,7 +23,6 @@ FirebaseApp.Create(new AppOptions() {
     ProjectId = builder.Configuration.GetSection("Firebase")["ProjectId"]
 });
 
-
 /* Add User database with MySQL */
 var connectionString = builder.Configuration.GetConnectionString("Default");
 var serverVersion = ServerVersion.AutoDetect(connectionString);

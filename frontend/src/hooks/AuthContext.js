@@ -69,6 +69,16 @@ function AuthProvider({ auth, children }) {
         return userData;
     }
 
+    /* Tries to delete user from backend database and Firebase */
+    async function deleteUser() {
+        axios.delete(process.env.REACT_APP_BACKEND_URL + "/user", {
+        }).then(function (response) {
+            console.log("Delete user successful");
+        }).catch(function(error) {
+            console.error("Delete user error: " + error);
+        });
+    }
+
     /* Tries to update daily user data */
     async function updateDailyUserData(timeSpent) {
         axios.post(process.env.REACT_APP_BACKEND_URL + "/daily_user", {
@@ -107,7 +117,7 @@ function AuthProvider({ auth, children }) {
     }, []);
 
     return(
-        <AuthContext.Provider value={{user, isLoggedIn, signIn, handleSignOut, getUserFromDb, updateDailyUserData}}>
+        <AuthContext.Provider value={{user, isLoggedIn, signIn, handleSignOut, getUserFromDb, deleteUser, updateDailyUserData}}>
             {children}
         </AuthContext.Provider>
     );

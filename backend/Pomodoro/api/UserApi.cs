@@ -9,7 +9,9 @@ public static class UserApi
     public static void MapUserEndpoints(this WebApplication app) 
     {
         /* Returns list of users */
+        /*
         app.MapGet("/users", async (UserDb db) => await db.Users.ToListAsync());
+        */
 
         /* Returns a user using token */
         app.MapPost("/user/data", async (UserDb db, HttpRequest request) => 
@@ -64,6 +66,7 @@ public static class UserApi
         });
 
         /* Updates a user */
+        /*
         app.MapPut("/user/{id}", async (UserDb db, User updateUser, int id) => 
         {
             var user = await db.Users.FindAsync(id);
@@ -76,19 +79,41 @@ public static class UserApi
             await db.SaveChangesAsync();
             return Results.NoContent();
         });
+        */
 
         /* Deletes a user */
-        app.MapDelete("/user/{id}", async (UserDb db, int id) => 
+        app.MapDelete("/user/", async (UserDb db, HttpRequest request) => 
         {
-            var user = await db.Users.FindAsync(id);
-            if(user is null) 
+            // get uid
+            IResult uidResult = await ApiUtil.GetUidFromToken(request);
+            string? uid = ApiUtil.GetUIDFromResult(uidResult);
+
+            if(uid != null) 
+            {
+                // remove user from db
+                User? user = await db.Set<User>().FirstOrDefaultAsync(u => u.Uid == uid);
+                if(user != null) 
+                {
+                    db.Users.Remove(user);
+                }
+
+                // remove all daily users from db
+                var dailyUserData = await db.DailyUsers
+                                            .Where(d => d.Uid == uid)
+                                            .ToListAsync();
+
+                db.DailyUsers.RemoveRange(dailyUserData);
+
+                // delete user from firebase
+                await FirebaseAuth.DefaultInstance.DeleteUserAsync(uid);
+
+                await db.SaveChangesAsync();
+                return Results.Ok();
+            }
+            else 
             {
                 return Results.NotFound();
             }
-
-            db.Users.Remove(user);
-            await db.SaveChangesAsync();
-            return Results.Ok();
         });
 
         /* 
