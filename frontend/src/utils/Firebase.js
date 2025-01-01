@@ -13,12 +13,17 @@ const firebaseConfig = {
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
+console.log("API Key: " + process.env.REACT_APP_FIREBASE_API_KEY);
+console.log("Auth Domain: " + process.env.REACT_APP_FIREBASE_AUTH_DOMAIN);
+console.log("Project Id: " + process.env.REACT_APP_FIREBASE_PROJECT_ID);
+console.log("Storage Bucket: " + process.env.REACT_APP_FIREBASE_STORAGE_BUCKET);
+console.log("Messaging Sender Id: " + process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID);
+console.log("App Id: " + process.env.REACT_APP_FIREBASE_APP_ID);
+
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 /* Initialize Firebase Authentication */
 const auth = getAuth(app);
