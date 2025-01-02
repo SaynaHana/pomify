@@ -12,6 +12,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      AllowedOrigins: ${{ secrets.ALLOWEDORIGINS }}
+      Firebase_ProjectId: ${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     steps:
       - uses: actions/checkout@v4
