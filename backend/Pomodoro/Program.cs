@@ -12,7 +12,7 @@ builder.Services.AddCors(options => {
         policy => {
             policy.WithOrigins(builder.Configuration["AllowedOrigins"])
             .WithHeaders(HeaderNames.ContentType, HeaderNames.Authorization)
-            .AllowAnyMethod();
+            .WithMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS");
         }
     ); 
 });
