@@ -10,12 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options => {
     options.AddPolicy(name: "PomodoroPolicy",
         policy => {
-            policy.WithOrigins("http://localhost:3000")
+            policy.WithOrigins(builder.Configuration["AllowedOrigins"])
             .WithHeaders(HeaderNames.ContentType, HeaderNames.Authorization)
             .AllowAnyMethod();
         }
     ); 
 });
+
+Console.WriteLine("Credential: " + builder.Configuration["GOOGLE_APPLICATION_CREDENTIALS"]);
 
 /* Setup Firebase */
 FirebaseApp.Create(new AppOptions() {
