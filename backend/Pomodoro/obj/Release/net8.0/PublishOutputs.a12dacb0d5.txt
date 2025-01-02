@@ -1,6 +1,7 @@
 /home/aria/source/pomify-publish/Pomodoro
 /home/aria/source/pomify-publish/appsettings.Development.json
 /home/aria/source/pomify-publish/appsettings.json
+/home/aria/source/pomify-publish/appsettings.Production.json
 /home/aria/source/pomify-publish/Pomodoro.dll
 /home/aria/source/pomify-publish/Pomodoro.runtimeconfig.json
 /home/aria/source/pomify-publish/Pomodoro.pdb

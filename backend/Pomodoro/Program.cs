@@ -6,6 +6,15 @@ using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if(builder.Environment.IsProduction()) 
+{
+    builder.WebHost.UseUrls("http://0.0.0.0:5000", "https://0.0.0.0:5001");
+    builder.Services.AddHttpsRedirection(options => {
+        options.HttpsPort = 5001;
+    });
+}
+
+
 /* Setup CORS */
 builder.Services.AddCors(options => {
     options.AddPolicy(name: "PomodoroPolicy",
@@ -17,12 +26,9 @@ builder.Services.AddCors(options => {
     ); 
 });
 
-GoogleCredential credential;
-credential = GoogleCredential.FromFile(builder.Configuration["GOOGLE_APPLICATION_CREDENTIALS"]);
-
 /* Setup Firebase */
 FirebaseApp.Create(new AppOptions() {
-    Credential = credential,
+    Credential = GoogleCredential.GetApplicationDefault(),
     ProjectId = builder.Configuration.GetSection("Firebase")["ProjectId"]
 });
 
@@ -41,6 +47,7 @@ builder.Services.AddDbContext<UserDb>(options => {
         options.EnableDetailedErrors();
     }
 });
+
 
 /* Add Swagger header */
 builder.Services.AddEndpointsApiExplorer();
@@ -63,6 +70,12 @@ if(builder.Environment.IsDevelopment())
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pomodoro API V1");
     });
+}
+
+
+if(builder.Environment.IsProduction()) 
+{
+    app.UseHttpsRedirection();
 }
 
 app.UseCors("PomodoroPolicy");

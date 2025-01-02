@@ -113,3 +113,4 @@
 /home/aria/source/pomodoro/backend/Pomodoro/obj/Release/net8.0/Pomodoro.genruntimeconfig.cache
 /home/aria/source/pomodoro/backend/Pomodoro/obj/Release/net8.0/ref/Pomodoro.dll
 /home/aria/source/pomodoro/backend/Pomodoro/bin/Release/net8.0/appsettings.json
+/home/aria/source/pomodoro/backend/Pomodoro/bin/Release/net8.0/appsettings.Production.json
