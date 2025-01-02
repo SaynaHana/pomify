@@ -14,8 +14,11 @@ Pomify is a Pomodoro timer web app.
 
 **Server:** ASP.Net, MySQL, Firebase
 
-
-
+## Usage
+The timer page on the web app will let you start and stop the timer and select which Pomodoro mode to use.
+![Pomodoro Timer Page](https://github.com/SaynaHana/pomodoro/blob/main/public/timer.png)
+The stats page will show your own stats such as total time spent in Pomodoro and your streak.
+![Stats Page](https://github.com/SaynaHana/pomodoro/blob/main/public/stats.png)
 
 ## Installation
 
