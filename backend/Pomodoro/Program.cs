@@ -18,15 +18,7 @@ builder.Services.AddCors(options => {
 });
 
 GoogleCredential credential;
-
-if(!builder.Environment.IsDevelopment()) 
-{
-    credential = GoogleCredential.FromJson(Environment.GetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS"));
-}
-else 
-{
-    credential = GoogleCredential.GetApplicationDefault();
-}
+credential = GoogleCredential.FromFile(builder.Configuration["GOOGLE_APPLICATION_CREDENTIALS"]);
 
 /* Setup Firebase */
 FirebaseApp.Create(new AppOptions() {
