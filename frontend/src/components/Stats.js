@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./../App.css";
 import { useAuth } from "../hooks/AuthContext";
+import StatCard from "./StatCard";
+import StatProfile from "./StatProfile";
 
 /*
     Component for stats menu
@@ -25,13 +27,14 @@ function Stats() {
                 <h2 className="sub-header">Stats</h2>
                 { auth.isLoggedIn && user != null ? 
                     <div className="stats">
-                        <p>Streak: {user.streak}</p>
-                        <p>Longest Streak: {user.maxStreak}</p>
-                        <p>Cumulative Time in Pomodoro: {user.timeSpent} mins</p>
+                        <StatProfile user={auth.user}/>
+                        <StatCard title="Streak" value={user.streak + " days"}/>
+                        <StatCard title="Longest Streak" value={user.maxStreak + " days"}/>
+                        <StatCard title="Total Time" value={user.timeSpent + " mins"}/>
                     </div>
                     :
                     <div>
-
+                        <p>Error loading stats</p>                        
                     </div>
                 }
             </div>

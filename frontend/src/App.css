@@ -148,9 +148,46 @@ body {
   font-size: 18px;
 }
 
+.stats {
+  display: flex;
+  gap: 5px;
+}
+
 .stats p {
   text-align: left;
   font-size: 18px;
+}
+
+.stat-card {
+  display: flex;
+  text-align: left;
+  background: #473854;
+  width: fit-content;
+  padding: 50px;
+  border-radius: 10px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.stat-card h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.stat-card p {
+  font-size: 20px;
+  margin: 0;
+}
+
+.stat-card img {
+  width: 100px;
+  border-radius: 20px;
+}
+
+.stat-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .privacy-policy {
