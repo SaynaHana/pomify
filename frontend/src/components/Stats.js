@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./../App.css";
 import { useAuth } from "../hooks/AuthContext";
+import { useTimeGraph } from "../hooks/TimeGraphContext";
 import StatCard from "./StatCard";
 import StatProfile from "./StatProfile";
 
@@ -9,7 +10,9 @@ import StatProfile from "./StatProfile";
 */
 function Stats() {
     const auth = useAuth();
+    const timeGraph = useTimeGraph();
     const [user, setUser] = useState(null);
+    const [weeklyData, setWeeklyData] = useState(null);
 
     useEffect(() => {
         async function getUser() {
@@ -17,7 +20,13 @@ function Stats() {
             setUser(userData);
         }
 
+        async function getWeeklyTimeData() {
+            const weekly = await timeGraph.getWeeklyTimeData();
+            setWeeklyData(weekly);
+        }
+
         getUser();
+        getWeeklyTimeData();
     }, []);
 
 

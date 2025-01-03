@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 function StatProfile(props) {
     const user = props.user;
 

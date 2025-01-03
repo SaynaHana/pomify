@@ -7,6 +7,7 @@ import AppHeader from "./components/AppHeader";
 import AppFooter from "./components/AppFooter";
 import { PAGES, VISIBILITY } from "./utils/Constants";
 import AuthProvider from "./hooks/AuthContext";
+import TimeGraphProvider from "./hooks/TimeGraphContext";
 import { getAuth } from "firebase/auth";
 import "./App.css";
 
@@ -30,12 +31,14 @@ function App() {
   return (
     <div className="App">
       <AuthProvider auth={auth}>
-        <AppHeader onClick={switchPages}/>
-        { visibilities[PAGES.TIMER] && <Timer/> }
-        { visibilities[PAGES.STATS] && <Stats/>}
-        { visibilities[PAGES.SETTINGS] && <Settings/> }
-        { visibilities[PAGES.PRIVACY] && <PrivacyPolicy/>}
-        <AppFooter onClick={switchPages}/>
+        <TimeGraphProvider>
+          <AppHeader onClick={switchPages}/>
+          { visibilities[PAGES.TIMER] && <Timer/> }
+          { visibilities[PAGES.STATS] && <Stats/>}
+          { visibilities[PAGES.SETTINGS] && <Settings/> }
+          { visibilities[PAGES.PRIVACY] && <PrivacyPolicy/>}
+          <AppFooter onClick={switchPages}/>
+        </TimeGraphProvider>
       </AuthProvider>
     </div>
   );
