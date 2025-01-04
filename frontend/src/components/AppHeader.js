@@ -4,7 +4,7 @@ import DefaultButton from "./DefaultButton";
 import LoginButton from "./Login";
 import ProfilePicture from "./ProfilePicture";
 import { useState, useEffect } from "react";
-import { useAuth } from "../hooks/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 function AppHeader({ onClick }) {
     const auth = useAuth();

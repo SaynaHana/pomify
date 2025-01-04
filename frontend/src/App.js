@@ -6,8 +6,9 @@ import PrivacyPolicy from "./components/PrivacyPolicy";
 import AppHeader from "./components/AppHeader";
 import AppFooter from "./components/AppFooter";
 import { PAGES, VISIBILITY } from "./utils/Constants";
-import AuthProvider from "./hooks/AuthContext";
-import TimeGraphProvider from "./hooks/TimeGraphContext";
+import AuthProvider from "./contexts/AuthContext";
+import TimeGraphProvider from "./contexts/TimeGraphContext";
+import TimerProvider from "./contexts/TimerContext";
 import { getAuth } from "firebase/auth";
 import "./App.css";
 
@@ -32,12 +33,14 @@ function App() {
     <div className="App">
       <AuthProvider auth={auth}>
         <TimeGraphProvider>
-          <AppHeader onClick={switchPages}/>
-          { visibilities[PAGES.TIMER] && <Timer/> }
-          { visibilities[PAGES.STATS] && <Stats/>}
-          { visibilities[PAGES.SETTINGS] && <Settings/> }
-          { visibilities[PAGES.PRIVACY] && <PrivacyPolicy/>}
-          <AppFooter onClick={switchPages}/>
+          <TimerProvider>
+            <AppHeader onClick={switchPages}/>
+            { visibilities[PAGES.TIMER] && <Timer/> }
+            { visibilities[PAGES.STATS] && <Stats/>}
+            { visibilities[PAGES.SETTINGS] && <Settings/> }
+            { visibilities[PAGES.PRIVACY] && <PrivacyPolicy/>}
+            <AppFooter onClick={switchPages}/>
+          </TimerProvider>
         </TimeGraphProvider>
       </AuthProvider>
     </div>

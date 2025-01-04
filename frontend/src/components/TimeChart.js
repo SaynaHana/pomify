@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Chart as ChartJS, Tooltip, Legend, Title, LinearScale, CategoryScale, BarElement } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { useTimeGraph } from "../hooks/TimeGraphContext";
+import { useTimeGraph } from "../contexts/TimeGraphContext";
 
 function TimeChart() {
     const timeGraph = useTimeGraph();

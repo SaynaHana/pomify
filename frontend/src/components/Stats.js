@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./../App.css";
-import { useAuth } from "../hooks/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import StatCard from "./StatCard";
 import StatProfile from "./StatProfile";
 import TimeChart from "./TimeChart";

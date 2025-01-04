@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import DefaultButton from "./DefaultButton";
-import { useAuth } from "./../hooks/AuthContext";
+import { useAuth } from "./../contexts/AuthContext";
 import "./../App.css";
 
 /*

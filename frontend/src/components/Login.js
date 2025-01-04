@@ -1,6 +1,6 @@
 import React from "react";
 import DefaultButton from "./DefaultButton";
-import { useAuth } from "./../hooks/AuthContext";
+import { useAuth } from "./../contexts/AuthContext";
 
 function LoginButton() {
     const auth = useAuth();

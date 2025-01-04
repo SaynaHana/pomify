@@ -1,7 +1,7 @@
 import React from "react";
 import "./../App.css";
 import DefaultButton from "./DefaultButton";
-import { useAuth } from "./../hooks/AuthContext";
+import { useAuth } from "./../contexts/AuthContext";
 
 function ProfileDropdown() {
     const auth = useAuth();    
