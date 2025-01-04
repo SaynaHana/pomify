@@ -148,14 +148,22 @@ body {
   font-size: 18px;
 }
 
-.stats {
+.stats p {
+  text-align: left;
+  font-size: 18px;
+}
+
+.stats-cards {
   display: flex;
   gap: 5px;
 }
 
-.stats p {
-  text-align: left;
-  font-size: 18px;
+.stats-time-chart {
+  background: white;
+  background: #473854;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .stat-card {
