@@ -73,8 +73,12 @@ function AuthProvider({ auth, children }) {
     async function deleteUser() {
         axios.delete(process.env.REACT_APP_BACKEND_URL + "/user", {
         }).then(function (response) {
+            // eslint-disable-next-line no-alert
+            alert("Account deleted successfully. It might show that you're still signed in, but if you sign out and try to sign back in, you won't be able to because your data is deleted.")
             console.log("Delete user successful");
         }).catch(function(error) {
+            // eslint-disable-next-line no-alert
+            alert("Error in deleting account. You may request deletion by emailing aerisiadev@gmail.com. Make sure to include the email address of the account you would like to delete in the email.");
             console.error("Delete user error: " + error);
         });
     }
