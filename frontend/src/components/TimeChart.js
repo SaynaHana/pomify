@@ -15,7 +15,6 @@ function TimeChart() {
             const config = await timeGraph.getGraphConfig();
 
             if(config != null) {
-                console.log(config);
                 setData(config.data); 
                 setOptions(config.options);
             }

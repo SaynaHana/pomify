@@ -83,6 +83,18 @@ body {
   color: #292D34;
 }
 
+.delete-button {
+  width: fit-content;
+  padding: 0 15px;
+  background-color: rgb(215, 93, 93);
+}
+
+.delete-button:hover {
+  width: fit-content;
+  padding: 0 15px;
+  background-color: rgb(194, 66, 66);
+}
+
 #pomodoro-count {
   font-size: 18px;
   color: #bebebe;
@@ -131,21 +143,34 @@ body {
   padding: 0px 5px;
 }
 
-#setting-list {
-  list-style-type: none;
+.settings {
   display: flex;
-  text-align: left;
-  margin: 0;
-  padding: 0;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
 }
 
 .setting h3 {
   font-size: 20px;
-  margin-bottom: 0;
 }
 
 .setting p {
   font-size: 18px;
+}
+
+.mode-setting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mode-setting input {
+  border: none;
+  height: 40px;
+  width: 75px;
+  font-size: 18px;
+  padding: 0 10px;
+  border-radius: 10px;
 }
 
 .stats p {
